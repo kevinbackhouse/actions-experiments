@@ -19,7 +19,7 @@ jobs:
         url: [https://test.pypi.org/p/seclab-taskflow-agent2]
     uses: ./.github/workflows/publish-reusable.yml@main
     with:
-      version: ${{ inputs.version }}
+      tag_name: ${{ inputs.version }}
       release_notes: ${{ github.head_ref }}
       repository_url: https://test.pypi.org/legacy/
       environment: ${{ toJSON(matrix) }}
