@@ -14,10 +14,6 @@ jobs:
     permissions:
       contents: write
       id-token: write  # For trusted publishing
-    strategy:
-      matrix:
-        name: [testpypi]
-        url: [https://test.pypi.org/p/seclab-taskflow-agent2]
     testenv:
       name: testpypi
       url: https://test.pypi.org/p/seclab-taskflow-agent2
@@ -28,6 +24,6 @@ jobs:
           tag_name: ${{ inputs.version }}
           release_notes: ${{ github.head_ref }}
           repository_url: https://test.pypi.org/legacy/
-          environment: ${{ toJSON(matrix) }}
+          environment: ${{ toJSON(testenv) }}
         secrets:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
