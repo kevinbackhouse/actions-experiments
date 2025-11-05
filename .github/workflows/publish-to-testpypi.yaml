@@ -8,14 +8,21 @@ on:
         required: true
 
 jobs:
-  create_env:
+  create_tag_name:
     name: Create Environment
-    run:
-      echo hi
+    runs-on: ubuntu-latest
+    outputs:
+      tag_name: ${{ steps.create_tag_name.outputs.tag_name }}
+    steps:
+      - name: Build
+        id: create_tag_name_step
+        env:
+          REFNAME: ${{ github.head_ref }}
+        run: echo "tag_name=$REFNAME" >> $GITHUB_OUTPUT
 
   publish:
     name: Publish wheel to TestPyPI
-    needs: create_env
+    needs: create_tag_name
     permissions:
       contents: write
       id-token: write  # For trusted publishing
@@ -24,6 +31,6 @@ jobs:
       tag_name: ${{ inputs.version }}
       release_notes: ${{ github.head_ref }}
       repository_url: https://test.pypi.org/legacy/
-      environment: wassup
+      environment: ${{ needs.create_tag_name.outputs.tag_name }}
     secrets:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
