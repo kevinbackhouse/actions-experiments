@@ -14,16 +14,11 @@ jobs:
     permissions:
       contents: write
       id-token: write  # For trusted publishing
-    steps:
-      - name: Create env
-        run: echo hi
-
-      - name: Do it
-        uses: ./.github/workflows/publish-reusable.yml
-        with:
-          tag_name: ${{ inputs.version }}
-          release_notes: ${{ github.head_ref }}
-          repository_url: https://test.pypi.org/legacy/
-          environment: wassup
-        secrets:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    uses: ./.github/workflows/publish-reusable.yml
+    with:
+      tag_name: ${{ inputs.version }}
+      release_notes: ${{ github.head_ref }}
+      repository_url: https://test.pypi.org/legacy/
+      environment: wassup
+    secrets:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
