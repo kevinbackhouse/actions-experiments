@@ -7,6 +7,11 @@ on:
         description: 'Version name for release'
         required: true
 
+env:
+  testvar:
+    name: testpypi
+    url: https://test.pypi.org/p/seclab-taskflow-agent2
+
 jobs:
   publish:
     name: Publish wheel to TestPyPI
