@@ -8,8 +8,14 @@ on:
         required: true
 
 jobs:
+  create_env:
+    name: Create Environment
+    run:
+      echo hi
+
   publish:
     name: Publish wheel to TestPyPI
+    needs: create_env
     permissions:
       contents: write
       id-token: write  # For trusted publishing
