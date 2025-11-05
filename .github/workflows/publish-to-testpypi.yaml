@@ -26,6 +26,7 @@ jobs:
     permissions:
       contents: write
       id-token: write  # For trusted publishing
+    if: startsWith(inputs.version, 'test-release-')
     uses: ./.github/workflows/publish-reusable.yml
     with:
       tag_name: ${{ inputs.version }}
