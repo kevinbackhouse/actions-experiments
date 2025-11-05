@@ -18,8 +18,8 @@ jobs:
       version: ${{ inputs.version }}
       release_notes: ${{ github.head_ref }}
       repository_url: https://test.pypi.org/legacy/
+      environment:
+        name: testpypi
+        url: https://test.pypi.org/p/seclab-taskflow-agent2
     secrets:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    environment:
-      name: testpypi
-      url: https://test.pypi.org/p/seclab-taskflow-agent2
