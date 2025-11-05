@@ -7,6 +7,10 @@ on:
         description: 'Version name for release'
         required: true
 
+environment:
+  name: testpypi
+  url: https://test.pypi.org/p/seclab-taskflow-agent2
+
 jobs:
   publish:
     name: Publish wheel to TestPyPI
@@ -18,8 +22,5 @@ jobs:
       version: ${{ inputs.version }}
       release_notes: ${{ github.head_ref }}
       repository_url: https://test.pypi.org/legacy/
-      environment:
-        name: testpypi
-        url: https://test.pypi.org/p/seclab-taskflow-agent2
     secrets:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
