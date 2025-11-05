@@ -7,11 +7,6 @@ on:
         description: 'Version name for release'
         required: true
 
-env:
-  testvar:
-    name: testpypi
-    url: https://test.pypi.org/p/seclab-taskflow-agent2
-
 jobs:
   publish:
     name: Publish wheel to TestPyPI
@@ -22,6 +17,9 @@ jobs:
       matrix:
         name: [testpypi]
         url: [https://test.pypi.org/p/seclab-taskflow-agent2]
+    testenv:
+      name: testpypi
+      url: https://test.pypi.org/p/seclab-taskflow-agent2
     uses: ./.github/workflows/publish-reusable.yml
     with:
       tag_name: ${{ inputs.version }}
