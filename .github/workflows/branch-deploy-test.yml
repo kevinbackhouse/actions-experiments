@@ -19,6 +19,7 @@ jobs:
           trigger: "deploy test"
           reaction: "eyes"
           stable_branch: "main"
+          environment: "deploy_test"
 
       - name: checkout
         if: steps.branch-deploy.outputs.continue == 'true'
