@@ -25,6 +25,7 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           ref: ${{ steps.branch-deploy.outputs.sha }}
+          token: ${{ secrets.mypat }}
 
       - name: update date
         if: steps.branch-deploy.outputs.continue == 'true'
@@ -42,6 +43,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           ref: ${{ needs.prepare.steps.branch-deploy.outputs.sha }}
+          token: ${{ secrets.mypat }}
 
       - name: Print
         run: |
