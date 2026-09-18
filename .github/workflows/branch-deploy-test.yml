@@ -8,7 +8,11 @@ jobs:
     name: Prepare
     runs-on: ubuntu-latest
     permissions:
-      pull-requests: write
+      pull-requests: write # Required for commenting on PRs
+      deployments: write # Required for updating deployment statuses
+      contents: write # Required for reading/writing the lock file
+      checks: read # Required for checking if the CI checks have passed in order to deploy the PR
+      statuses: read # Required for checking if all commit statuses are "success" in order to deploy the PR
     outputs:
       success: ${{ steps.create_matrix.outputs.prepare_success }}
     steps:
@@ -26,7 +30,6 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           ref: ${{ steps.branch-deploy.outputs.sha }}
-          token: ${{ secrets.mypat }}
 
       - name: update date
         if: steps.branch-deploy.outputs.continue == 'true'
@@ -44,7 +47,6 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           ref: ${{ needs.prepare.steps.branch-deploy.outputs.sha }}
-          token: ${{ secrets.mypat }}
 
       - name: Print
         run: |
