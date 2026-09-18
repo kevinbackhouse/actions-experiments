@@ -52,6 +52,7 @@ jobs:
 
       - name: Print
         run: |
-          echo xxx ${{ needs.prepare.outputs.prepare_success }} yyy
+          echo xxx ${{ needs.prepare.outputs.success }} yyy
+          echo xxx ${{ needs.prepare.steps.branch-deploy.outputs.sha }} yyy
           git log -2
           git status
