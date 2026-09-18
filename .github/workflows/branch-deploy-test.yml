@@ -18,11 +18,12 @@ jobs:
     steps:
       - name: branch-deploy
         id: branch-deploy
-        uses: github/branch-deploy@f0984057ffe1aa340aa017b6eafb894310aed88e # v12.0.0
+        uses: github/branch-deploy@v12.0.0
         with:
           trigger: "deploy test"
           reaction: "eyes"
           stable_branch: "main"
+          update_branch: "disabled" # do not require the branch to be up-to-date
           environment: "deploy_test"
 
       - name: checkout
