@@ -15,6 +15,7 @@ jobs:
       statuses: read # Required for checking if all commit statuses are "success" in order to deploy the PR
     outputs:
       success: ${{ steps.create_matrix.outputs.prepare_success }}
+      sha: ${{ steps.branch-deploy.outputs.sha }}
     steps:
       - name: branch-deploy
         id: branch-deploy
@@ -48,11 +49,11 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
-          ref: ${{ needs.prepare.steps.branch-deploy.outputs.sha }}
+          ref: ${{ needs.prepare.outputs.sha }}
 
       - name: Print
         run: |
           echo xxx ${{ needs.prepare.outputs.success }} yyy
-          echo xxx ${{ needs.prepare.steps.branch-deploy.outputs.sha }} yyy
+          echo xxx ${{ needs.prepare.outputs.sha }} yyy
           git log -2
           git status
