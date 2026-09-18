@@ -52,4 +52,5 @@ jobs:
 
       - name: Print
         run: |
-          echo ${{ needs.prepare.outputs.prepare_success }}
+          echo xxx ${{ needs.prepare.outputs.prepare_success }} yyy
+          git log -2
