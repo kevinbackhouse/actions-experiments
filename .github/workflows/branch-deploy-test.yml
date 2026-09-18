@@ -54,3 +54,4 @@ jobs:
         run: |
           echo xxx ${{ needs.prepare.outputs.prepare_success }} yyy
           git log -2
+          git status
