@@ -1,0 +1,48 @@
+name: Branch deploy test
+on:
+  issue_comment:
+    types: [create] # Add "deploy test" as a PR comment to trigger this workflow.
+
+jobs:
+  prepare:
+    name: Prepare
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    outputs:
+      success: ${{ steps.create_matrix.outputs.prepare_success }}
+    steps:
+      - name: branch-deploy
+        id: branch-deploy
+        uses: github/branch-deploy@f0984057ffe1aa340aa017b6eafb894310aed88e # v12.0.0
+        with:
+          trigger: "deploy test"
+          reaction: "eyes"
+          stable_branch: "main"
+
+      - name: checkout
+        if: steps.branch-deploy.outputs.continue == 'true'
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ${{ steps.branch-deploy.outputs.sha }}
+
+      - name: update date
+        if: steps.branch-deploy.outputs.continue == 'true'
+        id: create_matrix
+        run: |
+          date >> timestamp.txt
+          echo "prepare_success=true" >> $GITHUB_OUTPUT
+
+  update:
+    needs: [prepare]
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ${{ needs.prepare.steps.branch-deploy.outputs.sha }}
+
+      - name: Print
+        run: |
+          echo ${{ needs.prepare.outputs.prepare_success }}
