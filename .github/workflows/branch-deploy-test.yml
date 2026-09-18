@@ -1,7 +1,7 @@
 name: Branch deploy test
 on:
   issue_comment:
-    types: [create] # Add "deploy test" as a PR comment to trigger this workflow.
+    types: [created] # Add "deploy test" as a PR comment to trigger this workflow.
 
 jobs:
   prepare:
