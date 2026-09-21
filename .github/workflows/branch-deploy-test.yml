@@ -7,6 +7,7 @@ jobs:
   prepare:
     name: Prepare
     runs-on: ubuntu-latest
+    environment: "deploy_test"
     permissions:
       pull-requests: write # Required for commenting on PRs
       deployments: write # Required for updating deployment statuses
@@ -25,7 +26,6 @@ jobs:
           reaction: "eyes"
           stable_branch: "main"
           update_branch: "disabled" # do not require the branch to be up-to-date
-          environment: "deploy_test"
 
       - name: checkout
         if: steps.branch-deploy.outputs.continue == 'true'
