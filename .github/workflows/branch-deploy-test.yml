@@ -29,7 +29,47 @@ jobs:
 
       - name: debug
         run: |
-          echo ${{ steps.branch-deploy.output }}
+          echo decision ${{ steps.branch-deploy.decision }}
+          echo reason_code ${{ steps.branch-deploy.reason_code }}
+          echo result ${{ steps.branch-deploy.result }}
+          echo continue ${{ steps.branch-deploy.continue }}
+          echo fork ${{ steps.branch-deploy.fork }}
+          echo triggered ${{ steps.branch-deploy.triggered }}
+          echo comment_body ${{ steps.branch-deploy.comment_body }}
+          echo issue_number ${{ steps.branch-deploy.issue_number }}
+          echo actor ${{ steps.branch-deploy.actor }}
+          echo environment ${{ steps.branch-deploy.environment }}
+          echo params ${{ steps.branch-deploy.params }}
+          echo parsed_params ${{ steps.branch-deploy.parsed_params }}
+          echo noop ${{ steps.branch-deploy.noop }}
+          echo sha ${{ steps.branch-deploy.sha }}
+          echo default_branch_tree_sha ${{ steps.branch-deploy.default_branch_tree_sha }}
+          echo ref ${{ steps.branch-deploy.ref }}
+          echo base_ref ${{ steps.branch-deploy.base_ref }}
+          echo comment_id ${{ steps.branch-deploy.comment_id }}
+          echo deployment_id ${{ steps.branch-deploy.deployment_id }}
+          echo environment_url ${{ steps.branch-deploy.environment_url }}
+          echo type ${{ steps.branch-deploy.type }}
+          echo fork_ref ${{ steps.branch-deploy.fork_ref }}
+          echo fork_label ${{ steps.branch-deploy.fork_label }}
+          echo fork_checkout ${{ steps.branch-deploy.fork_checkout }}
+          echo fork_full_name ${{ steps.branch-deploy.fork_full_name }}
+          echo initial_reaction_id ${{ steps.branch-deploy.initial_reaction_id }}
+          echo initial_comment_id ${{ steps.branch-deploy.initial_comment_id }}
+          echo actor_handle ${{ steps.branch-deploy.actor_handle }}
+          echo global_lock_claimed ${{ steps.branch-deploy.global_lock_claimed }}
+          echo global_lock_released ${{ steps.branch-deploy.global_lock_released }}
+          echo unlocked_environments ${{ steps.branch-deploy.unlocked_environments }}
+          echo sha_deployment ${{ steps.branch-deploy.sha_deployment }}
+          echo review_decision ${{ steps.branch-deploy.review_decision }}
+          echo is_outdated ${{ steps.branch-deploy.is_outdated }}
+          echo merge_state_status ${{ steps.branch-deploy.merge_state_status }}
+          echo commit_status ${{ steps.branch-deploy.commit_status }}
+          echo approved_reviews_count ${{ steps.branch-deploy.approved_reviews_count }}
+          echo needs_to_be_deployed ${{ steps.branch-deploy.needs_to_be_deployed }}
+          echo commit_verified ${{ steps.branch-deploy.commit_verified }}
+          echo total_seconds ${{ steps.branch-deploy.total_seconds }}
+          echo non_default_target_branch_used ${{ steps.branch-deploy.non_default_target_branch_used }}
 
       - name: checkout
         if: steps.branch-deploy.outputs.continue == 'true'
