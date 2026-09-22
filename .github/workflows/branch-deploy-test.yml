@@ -27,6 +27,10 @@ jobs:
           stable_branch: "main"
           update_branch: "disabled" # do not require the branch to be up-to-date
 
+      - name: debug
+        run: |
+          echo ${{ steps.branch-deploy.output }}
+
       - name: checkout
         if: steps.branch-deploy.outputs.continue == 'true'
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
