@@ -24,7 +24,7 @@ jobs:
         uses: github/branch-deploy@f0984057ffe1aa340aa017b6eafb894310aed88e # v12.0.0
         with:
           trigger: "Test001"
-          reaction: "eyes"
+          reaction: "rocket"
           stable_branch: "main"
           checks: "required" # don't proceed if any required checks failed
           environment: "Test001"
