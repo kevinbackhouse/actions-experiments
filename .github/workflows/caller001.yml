@@ -25,7 +25,7 @@ jobs:
         with:
           trigger: "Test001"
           reaction: "eyes"
-          stable_branch: "dev"
+          stable_branch: "main"
           checks: "required" # don't proceed if any required checks failed
           environment: "Test001"
 
