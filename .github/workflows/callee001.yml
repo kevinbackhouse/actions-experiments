@@ -27,7 +27,7 @@ jobs:
         if: github.event_name != 'push'
         uses: actions/checkout@v7  
         with:
-          ref: ${{ github.event.inputs.sha }}
+          ref: ${{ inputs.sha }}
 
       - name: debug
         run: |
