@@ -31,7 +31,6 @@ jobs:
 
   doit:
     needs: [check]
-    runs-on: ubuntu-latest
     if: needs.check.outputs.success == 'true'
     uses: $/.github/workflows/callee001.yml
     with:
