@@ -1,0 +1,34 @@
+name: Test001
+
+on:
+  workflow_call:
+    inputs:
+      pr_id:
+        description: Pull request ID
+        required: true
+        type: number
+      sha:
+        description: Commit ID
+        required: true
+        type: string
+  push:
+    branches:
+      - main
+
+jobs:
+  doit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout on push
+        if: github.event_name == 'push'
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: checkout on workflow_call
+        if: github.event_name != 'push'
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ inputs.sha }}
+
+      - name: debug
+        run: |
+          git status
