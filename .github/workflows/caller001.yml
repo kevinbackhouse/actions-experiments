@@ -5,7 +5,7 @@ on:
     types: [created]  # Add "Test001" as a PR comment to trigger.
 
 jobs:
-  doit:
+  check:
     runs-on: ubuntu-latest
     permissions:
       # Permissions for the branch-deploy action, as documented here:
@@ -15,7 +15,9 @@ jobs:
       contents: write # Required for reading/writing the lock file
       checks: read # Required for checking if the CI checks have passed in order to deploy the PR
       statuses: read # Required for checking if all commit statuses are "success" in order to deploy the PR
-
+    outputs:
+      success: ${{ steps.branch-deploy.outputs.continue }}
+      sha: ${{ steps.branch-deploy.outputs.sha }}
     steps:
       - name: branch-deploy
         id: branch-deploy
@@ -27,9 +29,11 @@ jobs:
           checks: "required" # don't proceed if any required checks failed
           environment: "Test001"
 
-      - name: call reusuable workflow
-        if: steps.branch-deploy.outputs.continue == 'true'
-        uses: $/.github/workflows/callee001.yml
-        with:
-          pr_id: ${{ github.event.issue.number }}
-          sha: ${{ steps.branch-deploy.outputs.sha }}
+  doit:
+    needs: [check]
+    runs-on: ubuntu-latest
+    if: needs.check.outputs.success == 'true'
+    uses: $/.github/workflows/callee001.yml
+    with:
+      pr_id: ${{ github.event.issue.number }}
+      sha: ${{ needs.check.outputs.sha }}

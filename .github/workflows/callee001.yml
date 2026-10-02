@@ -6,9 +6,11 @@ on:
       pr_id:
         description: Pull request ID
         required: true
+        type: number
       sha:
         description: Commit ID
         required: true
+        type: string
   push:
     branches:
       - main
