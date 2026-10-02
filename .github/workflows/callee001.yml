@@ -23,7 +23,7 @@ jobs:
         if: github.event_name == 'push'
         uses: actions/checkout@v7  
 
-      - name: checkout on workflow_run
+      - name: checkout on workflow_call
         if: github.event_name != 'push'
         uses: actions/checkout@v7  
         with:
