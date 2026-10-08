@@ -1,4 +1,4 @@
-name: Test002
+name: Test002 on push
 
 on:
   push:
@@ -13,4 +13,4 @@ jobs:
       contents: write
       pull-requests: read
     steps:
-      - uses: ./.github/actions/Test002
+      - uses: kevinbackhouse/actions-experiments/.github/actions/Test002@main
