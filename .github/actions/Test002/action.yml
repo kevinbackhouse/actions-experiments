@@ -29,6 +29,7 @@ runs:
       env:
         GH_TOKEN: ${{ github.token }}
         PR_ID: ${{ inputs.pr_id }}
+      shell: bash
       run: |
         export PR_INFO=$(gh api "repos/{owner}/{repo}/pulls/$PR_ID" --jq '{url: .head.repo.clone_url, branch: .head.ref}')
         export CLONE_URL=$(echo $PR_INFO | jq -r '.url')
