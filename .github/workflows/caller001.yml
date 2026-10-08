@@ -40,7 +40,6 @@ jobs:
           stable_branch: "main"
           checks: "required" # don't proceed if any required checks failed
           allow_forks: true
-          skip_completing: true
           environment: "Test001"
   doit:
     needs: [check]
