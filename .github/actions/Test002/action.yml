@@ -41,6 +41,7 @@ runs:
     - name: remove trailing whitespace and push
       env:
         GH_TOKEN: ${{ github.token }}
+      shell: bash
       run: |
         git config user.name "kevbot"
         git config user.email "kevbot@github.com"
