@@ -1,0 +1,59 @@
+name: Test002
+description: Remove trailing whitespace from README.md and push the change
+
+inputs:
+  pr_id:
+    description: Pull request ID
+    required: false
+    type: number
+  sha:
+    description: Commit ID
+    required: false
+    type: string
+
+runs:
+  using: composite
+  steps:
+    - name: checkout on main branch
+      if: !inputs.pr_id
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+    - name: checkout on pull request
+      if: inputs.pr_id
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      with:
+        ref: ${{ inputs.sha }}
+
+    - name: set upstream branch on pull request
+      if: inputs.sha
+      env:
+        GH_TOKEN: ${{ github.token }}
+        PR_ID: ${{ inputs.pr_id }}
+      run: |
+        export PR_INFO=$(gh api "repos/{owner}/{repo}/pulls/$PR_ID" --jq '{url: .head.repo.clone_url, branch: .head.ref}')
+        export CLONE_URL=$(echo $PR_INFO | jq -r '.url')
+        export BRANCH=$(echo $PR_INFO | jq -r '.branch')
+        git checkout -b $BRANCH
+        git remote add other $CLONE_URL
+        git fetch other
+        git branch --set-upstream-to=other/$BRANCH
+
+    - name: remove trailing whitespace and push
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: |
+        git config user.name "kevbot"
+        git config user.email "kevbot@github.com"
+
+        # Remove trailing whitespace from README.md. This operation
+        # is idempotent, so it won't cause an infinite loop in the
+        # "on push" trigger.
+        sed -i 's/[[:blank:]]*$//' README.md
+
+        git add README.md
+        if git diff --cached --quiet; then
+          echo "no changes"
+        else
+          git commit -m "remove trailing whitespace"
+          git push
+        fi

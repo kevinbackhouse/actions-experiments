@@ -1,0 +1,15 @@
+name: Test002
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  doit:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: read
+    steps:
+      - uses: ./.github/actions/Test002
