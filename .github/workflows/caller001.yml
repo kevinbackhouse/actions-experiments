@@ -5,16 +5,28 @@ on:
     types: [created]  # Add "Test001" as a PR comment to trigger.
 
 jobs:
+  # This job checks that the author of the issue comment is a
+  # project maintainer.
   check:
     runs-on: ubuntu-latest
+    # Quick filter to ignore irrelevant comments
+    if: >-
+      ${{
+        github.event.issue.pull_request &&
+        contains(
+          fromJSON('["OWNER", "MEMBER", "COLLABORATOR"]'),
+          github.event.comment.author_association
+        ) &&
+        contains(github.event.comment.body, 'Test001')
+      }}
+    # Permissions for the branch-deploy action, as documented here:
+    # https://github.com/github/branch-deploy#how-does-it-work-
     permissions:
-      # Permissions for the branch-deploy action, as documented here:
-      #  https://github.com/github/branch-deploy#how-does-it-work-
-      pull-requests: write # Required for commenting on PRs
-      deployments: write # Required for updating deployment statuses
-      contents: write # Required for reading/writing the lock file
-      checks: read # Required for checking if the CI checks have passed in order to deploy the PR
-      statuses: read # Required for checking if all commit statuses are "success" in order to deploy the PR
+      pull-requests: write
+      deployments: write
+      contents: write
+      checks: read
+      statuses: read
     outputs:
       success: ${{ steps.branch-deploy.outputs.continue }}
       sha: ${{ steps.branch-deploy.outputs.sha }}
@@ -33,6 +45,9 @@ jobs:
     needs: [check]
     if: needs.check.outputs.success == 'true'
     uses: $/.github/workflows/callee001.yml
+    permissions:
+      pull-requests: read
+      contents: write
     with:
       pr_id: ${{ github.event.issue.number }}
       sha: ${{ needs.check.outputs.sha }}
