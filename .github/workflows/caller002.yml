@@ -40,7 +40,7 @@ jobs:
           environment: "Test002"
 
       - if: ${{ steps.branch-deploy.outputs.continue == 'true' }}
-        uses: ./.github/actions/Test002
+        uses: kevinbackhouse/actions-experiments/Test002@main
         with:
           pr_id: ${{ github.event.issue.number }}
           sha: ${{ steps.branch-deploy.outputs.sha }}
