@@ -39,7 +39,7 @@ jobs:
           allow_forks: true
           environment: "Test002"
 
-      - if: ${{ steps.branch-deploy.outputs.continue }}
+      - if: ${{ steps.branch-deploy.outputs.continue == 'true' }}
         uses: ./.github/actions/Test002
         with:
           pr_id: ${{ github.event.issue.number }}
