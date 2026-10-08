@@ -39,6 +39,7 @@ jobs:
           reaction: "rocket"
           stable_branch: "main"
           checks: "required" # don't proceed if any required checks failed
+          allow_forks: true
           environment: "Test001"
 
   doit:
