@@ -1,0 +1,46 @@
+name: Test002 Comment
+
+on:
+  issue_comment:
+    types: [created]  # Add "Test002" as a PR comment to trigger.
+
+jobs:
+  # This job checks that the author of the issue comment is a
+  # project maintainer.
+  check:
+    runs-on: ubuntu-latest
+    # Quick filter to ignore irrelevant comments
+    if: >-
+      ${{
+        github.event.issue.pull_request &&
+        contains(
+          fromJSON('["OWNER", "MEMBER", "COLLABORATOR"]'),
+          github.event.comment.author_association
+        ) &&
+        contains(github.event.comment.body, 'Test002')
+      }}
+    # Permissions for the branch-deploy action, as documented here:
+    # https://github.com/github/branch-deploy#how-does-it-work-
+    permissions:
+      pull-requests: write
+      deployments: write
+      contents: write
+      checks: read
+      statuses: read
+    steps:
+      - name: branch-deploy
+        id: branch-deploy
+        uses: github/branch-deploy@f0984057ffe1aa340aa017b6eafb894310aed88e # v12.0.0
+        with:
+          trigger: "Test002"
+          reaction: "rocket"
+          stable_branch: "main"
+          checks: "required" # don't proceed if any required checks failed
+          allow_forks: true
+          environment: "Test002"
+
+      - if: ${{ steps.branch-deploy.outputs.continue == 'true' }}
+        uses: kevinbackhouse/actions-experiments/.github/actions/Test002@main
+        with:
+          pr_id: ${{ github.event.issue.number }}
+          sha: ${{ steps.branch-deploy.outputs.sha }}
