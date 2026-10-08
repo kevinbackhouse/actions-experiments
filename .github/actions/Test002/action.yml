@@ -5,7 +5,6 @@ inputs:
   pr_id:
     description: Pull request ID
     required: false
-    type: number
   sha:
     description: Commit ID
     required: false
