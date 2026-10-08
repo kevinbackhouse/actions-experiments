@@ -1,4 +1,4 @@
-name: Test002 Comment
+name: Test002 on comment
 
 on:
   issue_comment:
